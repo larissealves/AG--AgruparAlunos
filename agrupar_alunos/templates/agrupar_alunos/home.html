@@ -1,0 +1,29 @@
+<h1> ALUNOS AQUI </h1>
+
+{% block content %}        
+
+                <div class="title_task"> 
+                    <div> 
+                        {% for result in caract_grupo %}
+                            <div class="title_task"> 
+                                <div>
+                                    {% for result in result %}           
+                                      {{result}}
+                                    {% endfor %}       
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <!---
+                            <p>{{caract_grupo}} - {{quantidade_integrantes}} </p>
+
+                            
+                                <p>{{soluca_grupo}}
+                                
+                        -->
+                    </div>
+                </div>
+
+               
+       
+{% endblock %}
