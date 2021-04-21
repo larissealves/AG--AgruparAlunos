@@ -7,6 +7,7 @@ class Grupo(models.Model):
    
     def __str__(self):
         return self.nome_grupo 
+
 class Aluno(models.Model):
     nome_aluno = models.CharField(max_length=200)
     caracteristica_aluno = models.CharField(max_length=200)
