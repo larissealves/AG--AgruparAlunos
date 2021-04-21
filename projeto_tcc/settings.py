@@ -25,6 +25,7 @@ SECRET_KEY = 'xjimdy025#gdkzhb=9p22py7aqqhnd!pp*89-t^lf#6%&08=j3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+#heroku config:set DEBUG='False'
 
 ALLOWED_HOSTS = ['https://agruparalunos.herokuapp.com/']
 
