@@ -1,6 +1,9 @@
+{{% extends "admin/base_site.html" %}
+{% block content %}
+
 <h1> ALUNOS AQUI </h1>
 
-{% block content %}        
+       
 
                 <div class="title_task"> 
                     <div> 
@@ -8,7 +11,7 @@
                             <div class="title_task"> 
                                 <div>
                                     {% for result in result %}           
-                                      {{result}}
+                                      {{result}} 
                                     {% endfor %}       
                                 </div>
                             </div>
@@ -24,6 +27,4 @@
                     </div>
                 </div>
 
-               
-       
 {% endblock %}

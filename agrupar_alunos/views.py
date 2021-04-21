@@ -37,7 +37,7 @@ class Grupoo():
               
         
 class Individuo():
-    def __init__(self, nome, caracteristicas, limite_integrante_grupo, grupo, geracao=0): #,,
+    def __init__(self, nome, caracteristicas, limite_integrante_grupo, grupo, geracao=0): 
         self.caracteristicas = caracteristicas
         self.nome = nome
         #self.valores = valores
@@ -46,9 +46,8 @@ class Individuo():
         self.grupo = grupo
         self.nota_avaliacao = 0
         self.geracao = geracao
-        self.cromossomo = []
 
-        
+        self.cromossomo = []
 
         #print('\nr', resul)
 
@@ -180,22 +179,14 @@ class Individuo():
             for i in range(len(caracteristicas)):
                  
                 if(self.cromossomo[i]=='1'):
-
-                  
-                    if self.caracteristicas[i].count(caracteristicas_grupo[g])== 0:
-                                #print("0 CARACTERISTICAS1")
-                        nota_por_aluno = 0
-                    if self.caracteristicas[i].count(caracteristicas_grupo[g])== 1:
-                                #print("1 CARACTERISTICAS")
-                        nota_por_aluno = 2  + 0.15
-                    if self.caracteristicas[i].count(caracteristicas_grupo[g])> 2:
-                                #print("2 ou + CARACTERISTICAS1")
-                        nota_por_aluno = 6 + 0.50
-                                #nota_por_aluno =  self.caracteristicas[i].count(caracteristicas_grupo[g])
-                
+                    if self.caracteristicas[i] == caracteristicas_grupo[g]:
+                        nota_por_aluno = self.caracteristicas[i].count(caracteristicas_grupo[g] )+ 0.35
+                    else:
+                        nota_por_aluno = 1 + 0.35
 
                
             self.nota_avaliacao += nota_por_aluno 
+            #print(self.nota_avaliacao)
                     #self.alunos_no_grupo = self.limite_integrante_grupo - quantidade_cromossomos_1 #diminuir espacoes disponiveis no grupo
        # print('\n', self.cromossomo, '= ', self.nota_avaliacao, '\n')
         
@@ -274,12 +265,11 @@ class AlgoritmoGenetico():
     def visualiza_geracao(self):
         melhor = self.populacao[0]
         '''
-        print("G:%s -> Valor: %s Espaço: %s Cromossomo: %s" % (self.populacao[0].geracao,
+        print("G:%s -> NOTA: %s Cromossomo: %s" % (self.populacao[0].geracao,
                                                                melhor.nota_avaliacao,
-                                                               melhor.nome,
                                                                melhor.cromossomo))
-        
         '''
+        
     def resolver(self, taxa_mutacao, numero_geracoes, nome, caracteristicas, limite_integrante_grupo, caracteristicas_grupo):
         self.inicializa_populacao(nome, caracteristicas, limite_integrante_grupo, caracteristicas_grupo)
         
@@ -317,15 +307,14 @@ class AlgoritmoGenetico():
             melhor = self.populacao[0]
             self.melhor_individuo(melhor)
 
-        
         '''
-        print("\nMelhor solução -> G: %s Valor: %s Espaço: %s Cromossomo: %s" %
+        print("\nMelhor solução -> G: %s Nota: %s Cromossomo: %s" %
               (self.melhor_solucao.geracao,
                self.melhor_solucao.nota_avaliacao,
-               self.melhor_solucao.nome,
                self.melhor_solucao.cromossomo))
-        '''
         
+        print('\n')
+        '''
         return self.melhor_solucao.cromossomo
         
         
@@ -397,13 +386,14 @@ for i in range(len(caracteristicas_grupo)):
     resultado = ag.resolver(taxa_mutacao, numero_geracoes, nome, caracteristicas, numero_integrantes_grupo[i], caracteristicas_grupo[i])
     
     #print('\nCROMOSSOMO RESULTANTE: ', resultado)
-    print('\n')
-    print('*'*70)
-    print(nome_grupo[i], '|', 'Caracteristica', caracteristicas_grupo[i], "->", " QNT Integrantes:", numero_integrantes_grupo[i], "       ")
+    
+    #print('\n')
+    #print('*'*70)
+    #print(nome_grupo[i], '|', 'Caracteristica', caracteristicas_grupo[i], "->", " QNT Integrantes:", numero_integrantes_grupo[i], "       ")
     
     caract_grupo = caracteristicas_grupo[i]
     quantidade_integrantes = numero_integrantes_grupo[i]
-    print('-'*70)
+    #print('-'*70)
     #nova_lista_nome = []
     novo_individuo = list(resultado)
     for i in range(len(nome)):
@@ -413,7 +403,7 @@ for i in range(len(caracteristicas_grupo)):
             melhores_solucoes_finais.append(nome[i]) 
             resul_momento[i] = '1'
             resul = resul_momento
-
+            print('\n\n\n')
             #tam =  len(melhores_solucoes_finais)
            
             #for i in range (tam):
@@ -436,8 +426,9 @@ for i in range(len(caracteristicas_grupo)):
 
     solucao_final = caract_grupo, quantidade_integrantes,  melhores_solucoes_finais
     solucao_final_tempale.append(solucao_final)
-    print('\n')
-    print(solucao_final)
+    #print('\n')
+    #print(solucao_final)
+    
     #print('solucao_final_tempale', solucao_final_tempale)
 
     #solucao_final = caract_grupo, quantidade_integrantes,  melhores_solucoes_finais
