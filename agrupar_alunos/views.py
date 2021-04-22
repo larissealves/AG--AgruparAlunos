@@ -338,13 +338,13 @@ for aluno in alunos:
 
 
 
-
+'''
 lista_grupos = []
 lista_grupos.append(Grupo("Grupo 01 ", 'B', 6))
 lista_grupos.append(Grupo("Grupo 02 ", 'A', 3))
 lista_grupos.append(Grupo("Grupo 03 ", 'C', 3))
 lista_grupos.append(Grupo("Grupo 04 ", 'D', 2))
-
+'''
 nome_grupo = []
 caracteristicas_grupo = []
 numero_integrantes_grupo = []
@@ -390,7 +390,7 @@ for i in range(len(caracteristicas_grupo)):
     #print('\n')
     #print('*'*70)
     #print(nome_grupo[i], '|', 'Caracteristica', caracteristicas_grupo[i], "->", " QNT Integrantes:", numero_integrantes_grupo[i], "       ")
-    
+    nom_grupo =  nome_grupo[i]
     caract_grupo = caracteristicas_grupo[i]
     quantidade_integrantes = numero_integrantes_grupo[i]
     #print('-'*70)
@@ -424,7 +424,7 @@ for i in range(len(caracteristicas_grupo)):
             '''
 
 
-    solucao_final = caract_grupo, quantidade_integrantes,  melhores_solucoes_finais
+    solucao_final =  nom_grupo, caract_grupo,  melhores_solucoes_finais
     solucao_final_tempale.append(solucao_final)
     #print('\n')
     #print(solucao_final)
