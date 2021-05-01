@@ -1,0 +1,37 @@
+{{% extends "admin/base_site.html" %}
+{% block content %}
+<br>
+<h1> Lista de Alunos </h1>
+
+       
+
+                <div class="title_task"> 
+                    <div> 
+                        {% for result in caract_grupo %}
+                            
+                        
+                        <br> <br>
+                            <div class="title_task"> 
+                                <div>                  
+                                    <H2>Grupo:<h2> 
+                                    <h5>
+                                        {% for result in result %}           
+                                            {{result}}
+                                        {% endfor %} 
+                                    </h5>       
+                                </div>
+                            </div>
+                        {% endfor %}
+                   
+
+                        <!---
+                            <p>{{caract_grupo}} - {{quantidade_integrantes}} </p>
+
+                            
+                                <p>{{soluca_grupo}}
+                                
+                        -->
+                    </div>
+                </div>
+
+{% endblock %}
