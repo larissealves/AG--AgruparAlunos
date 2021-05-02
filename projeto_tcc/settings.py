@@ -27,7 +27,7 @@ SECRET_KEY = 'xjimdy025#gdkzhb=9p22py7aqqhnd!pp*89-t^lf#6%&08=j3'
 DEBUG = False
 #heroku config:set DEBUG='False'
 
-ALLOWED_HOSTS = ['https://agruparalunos.herokuapp.com/admin']
+ALLOWED_HOSTS = ['https://agruparalunos.herokuapp.com/']
 
 
 # Application definition
@@ -121,4 +121,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+DISABLE_COLLECTSTATIC=1
 django_heroku.settings(locals())
