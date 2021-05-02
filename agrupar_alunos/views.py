@@ -5,24 +5,6 @@ from django.views.generic import TemplateView, FormView, ListView
 
 individou_ja_escolhidos = 0
 resul = []
-'''
-def HomePageView(request):
-    #Mudar nome da função : Salvar caracteristicas e nome dos alunos em um lista. Assim como, o script
-
-    alunos = Aluno.objects.all()
-    nome_a = []
-    caracteristicas_a = []
-
-    for aluno in alunos:
-        alunos_nome = aluno.nome_aluno
-        alunos_caractteristicas = aluno.caracteristica_aluno
-
-        nome_a.append(alunos_nome)
-        caracteristicas_a.append(aluno.caracteristica_aluno)
-
-    context = {'alunos_nome':nome, 'alunos_caracteristicas': caracteristicas}
-'''
-
 
 class Produto():
     def __init__(self, nome, caracteristica):
@@ -48,36 +30,9 @@ class Individuo():
         self.geracao = geracao
 
         self.cromossomo = []
-
-        #print('\nr', resul)
-
-
-        #a = 0
-        #cont = 0
-        #print(novo_individuo)
-        
-        '''
-        for i in range(len(caracteristicas)):
-            if random() < 0.5:
-                self.cromossomo.append("0")
-            else:
-                self.cromossomo.append("1")
-        
-            if self.cromossomo[i] == '1':
-                a +=1
-                    
-                if a > self.limite_integrante_grupo:
-                    if self.cromossomo[i] == '1':
-                        self.cromossomo[i] = '0'
-
-                    if a < self.limite_integrante_grupo:
-                        if self.cromossomo[i] == '0':
-                            self.cromossomo[i] = '1'
-        '''
+        #print(self.grupo)
         cont = 0
        
-       
-        #self.cromossomo = []
         if (len(resul)) == 0:
 
             for i in range(len(caracteristicas)):
@@ -106,65 +61,6 @@ class Individuo():
 
                 if resul[r] == '1':
                     self.cromossomo.append('0')
-        '''
-        for r in range(len(resul)):
-                if resul[r] == '0':
-                    quant_cromo_n_selecionados += 1
-                    if random() < 0.6:
-                        self.cromossomo.append('0')
-                    else:
-                        if quant_cromo_n_selecionados >= 0 and qunt_int_grupo < self.limite_integrante_grupo:
-                            self.cromossomo.append('1')
-                            qunt_int_grupo += 1
-                        else:
-                            self.cromossomo.append('0')    
-                if resul[r] == '1':
-                    self.cromossomo.append('0')
-        '''
-
-
-
-        '''
-        for i in novo_individuo:
-            for n in self.cromossomo:
-
-                #alterar_tipo = str(self.cromossomo[i])
-                if i == n:
-                    print('iguais')
-        '''
-        '''
-        print('\nc', self.cromossomo)  
-        intgrantes_grupo = 0
-        for c in novo_individuo:
-            
-            for n in self.cromossomo:
-                itera = 0
-                print('posicao a', self.cromossomo.index(n) )
-                if c == '0'  and n == '1':
-                    pass
-                if c == '1'  and n == '1':
-                    itera += 1
-                   
-                    altera_bit = round(random()  * len(self.cromossomo))
-                    self.cromossomo[i] = '0'
-   
-                    
-                    
-                    for n in range (len(self.cromossomo)):
-                        if self.cromossomo[i] ==1:
-                            intgrantes_grupo += 1
-                        if n == altera_bit:
-                            if intgrantes_grupo < self.limite_integrante_grupo:
-                                self.cromossomo[i] = '1'                     
-                                intgrantes_grupo += 1
-                            
-                                
-
-                        
-                else:
-                    pass
-        print('\nz', self.cromossomo)
-        ''' 
       
 #AVALIAR
     def avaliacao(self):
@@ -174,32 +70,31 @@ class Individuo():
         nota_por_aluno = 0
 
         
-        for g in range(len(caracteristicas_grupo)):
-            
-            for i in range(len(caracteristicas)):
-                 
-                if(self.cromossomo[i]=='1'):
-                    if self.caracteristicas[i] == caracteristicas_grupo[g]:
-                        nota_por_aluno = self.caracteristicas[i].count(caracteristicas_grupo[g] )+ 0.35
-                    else:
-                        nota_por_aluno = 1 + 0.35
+        for i in self.cromossomo:
+            if i == '1':
+                quantidade_cromossomos_1 += 1
+ 
+        lista_grupo_for = self.grupo.split() # String Grupo para lista
 
-               
-            self.nota_avaliacao += nota_por_aluno 
-            #print(self.nota_avaliacao)
-                    #self.alunos_no_grupo = self.limite_integrante_grupo - quantidade_cromossomos_1 #diminuir espacoes disponiveis no grupo
-       # print('\n', self.cromossomo, '= ', self.nota_avaliacao, '\n')
-        
+        if quantidade_cromossomos_1 != self.limite_integrante_grupo:
+            self.nota_avaliacao = 0
+        else:
+            for g in range(len(lista_grupo_for)):
+                    for i in range(len(caracteristicas)):
+
+                        if(self.cromossomo[i]=='1'):
+                                                        
+                            if self.caracteristicas[i] in lista_grupo_for:
+                                nota_por_aluno += self.caracteristicas[i].count(self.grupo) + 0.35
+                                
+                    self.nota_avaliacao =  nota_por_aluno
+                                 
                   
 
-
-     
     def crossover(self, outro_individuo):
-        #print('\noutro', outro_individuo.cromossomo)
-        #print('\ncromo 1', self.cromossomo)
+        
         corte = round(random()  * len(self.cromossomo))
-        #print('\nPonto de corte', corte)
-       
+      
         filho1 = outro_individuo.cromossomo[0:corte] + self.cromossomo[corte::]
         filho2 = self.cromossomo[0:corte] + outro_individuo.cromossomo[corte::]
         
@@ -207,19 +102,17 @@ class Individuo():
                   Individuo(self.nome, self.caracteristicas, self.limite_integrante_grupo, self.grupo, self.geracao + 1)]
         filhos[0].cromossomo = filho1
         filhos[1].cromossomo = filho2
-        #print('\nFilho 1', filho1)
-        #print('\nFilho 2', filho2)
+        
         return filhos
                    
     def mutacao(self, taxa_mutacao):
-        #("\nAntes %s " % self.cromossomo, '\n')
         for i in range(len(self.cromossomo)):
             if random() < taxa_mutacao:
                 if self.cromossomo[i] == '1':
                     self.cromossomo[i] = '0'
                 else:
                     self.cromossomo[i] = '1'
-       # print("Depois %s " % self.cromossomo)
+      
         return self
 
 class AlgoritmoGenetico():
@@ -269,7 +162,6 @@ class AlgoritmoGenetico():
                                                                melhor.nota_avaliacao,
                                                                melhor.cromossomo))
         '''
-        
     def resolver(self, taxa_mutacao, numero_geracoes, nome, caracteristicas, limite_integrante_grupo, caracteristicas_grupo):
         self.inicializa_populacao(nome, caracteristicas, limite_integrante_grupo, caracteristicas_grupo)
         
@@ -312,9 +204,8 @@ class AlgoritmoGenetico():
               (self.melhor_solucao.geracao,
                self.melhor_solucao.nota_avaliacao,
                self.melhor_solucao.cromossomo))
-        
-        print('\n')
         '''
+       
         return self.melhor_solucao.cromossomo
         
         
@@ -324,6 +215,7 @@ grupos = Grupo.objects.all()
 nome = []
 caracteristicas = []
 
+
 for aluno in alunos:
     alunos_nome = aluno.nome_aluno
     alunos_caractteristicas = aluno.caracteristica_aluno
@@ -331,20 +223,6 @@ for aluno in alunos:
     nome.append(alunos_nome)
     caracteristicas.append(aluno.caracteristica_aluno)
 
-# print('\n',nome)
-# print('\n', caracteristicas, '\n')
-
-  
-
-
-
-'''
-lista_grupos = []
-lista_grupos.append(Grupo("Grupo 01 ", 'B', 6))
-lista_grupos.append(Grupo("Grupo 02 ", 'A', 3))
-lista_grupos.append(Grupo("Grupo 03 ", 'C', 3))
-lista_grupos.append(Grupo("Grupo 04 ", 'D', 2))
-'''
 nome_grupo = []
 caracteristicas_grupo = []
 numero_integrantes_grupo = []
@@ -354,22 +232,10 @@ for grupo in grupos:
     caracteristicas_grupo.append(grupo.caracteristica_grupo)
     numero_integrantes_grupo.append(grupo.limite_integrante_grupo)
 
-#print(nome_grupo)
-
-'''
-print('\n', caracteristicas_grupo)
-print('\n', numero_integrantes_grupo, '\n')
-
-
-for i in range (len(caracteristicas_grupo)):
-    individuo1 = Individuo(nome, caracteristicas, numero_integrantes_grupo[i], caracteristicas_grupo[i])
-    individuo1.avaliacao()   
-
-'''
 cont = 0     
-tamanho_populacao = 20
+tamanho_populacao = 200
 taxa_mutacao = 0.01
-numero_geracoes = 100
+numero_geracoes = 220
 
 melhores_solucoes_finais = []
 grupos_melhor_solucao = []
@@ -381,15 +247,10 @@ for i in range(len(nome)):
     resul_momento.append("0")
 
 for i in range(len(caracteristicas_grupo)):
-        
+    #print('\n',caracteristicas_grupo[i])    
     ag = AlgoritmoGenetico(tamanho_populacao)
     resultado = ag.resolver(taxa_mutacao, numero_geracoes, nome, caracteristicas, numero_integrantes_grupo[i], caracteristicas_grupo[i])
     
-    #print('\nCROMOSSOMO RESULTANTE: ', resultado)
-    
-    #print('\n')
-    #print('*'*70)
-    #print(nome_grupo[i], '|', 'Caracteristica', caracteristicas_grupo[i], "->", " QNT Integrantes:", numero_integrantes_grupo[i], "       ")
     nom_grupo =  nome_grupo[i]
     caract_grupo = caracteristicas_grupo[i]
     quantidade_integrantes = numero_integrantes_grupo[i]
@@ -403,48 +264,15 @@ for i in range(len(caracteristicas_grupo)):
             melhores_solucoes_finais.append(nome[i]) 
             resul_momento[i] = '1'
             resul = resul_momento
-            print('\n\n\n')
-            #tam =  len(melhores_solucoes_finais)
-           
-            #for i in range (tam):
+    
 
-            
-            #nova_lista_nome = nome.copy()
-              
-            
-                   
-            #print('b', nova_lista_nome)
-            '''
-            a = nome[i]
-            b = nome.index(a)
-            nova_lista_nome = nome.copy()        
-            nova_lista_nome .pop(b)
-            
-            print('a', nova_lista_nome) 
-            '''
-
-
+    print('\n')
     solucao_final =  nom_grupo, caract_grupo,  melhores_solucoes_finais
     solucao_final_tempale.append(solucao_final)
-    #print('\n')
-    #print(solucao_final)
     
-    #print('solucao_final_tempale', solucao_final_tempale)
-
-    #solucao_final = caract_grupo, quantidade_integrantes,  melhores_solucoes_finais
-    #solucao_final_tempale.append(solucao_final)
-
-    #print('aaaa', g)
-               
-        
-             
-    #print('\nTODAS INFOS: ', 'GRUPO: ', caract_grupo, 'LIMITE: ', quantidade_integrantes, 'INTEGRANTES: ', melhores_solucoes, '\n' )
-    #print('\n\n', melhores_solucoes_finais)
-    #nome =  list(nova_lista_nome)
     melhores_solucoes_finais = []
 
 
-print("\n")
 def resultados(request):
            
     return render(request, 'agrupar_alunos/home.html', {'caract_grupo': solucao_final_tempale })
