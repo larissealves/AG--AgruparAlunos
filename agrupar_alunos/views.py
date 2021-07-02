@@ -82,13 +82,14 @@ class Individuo():
             for g in range(len(lista_grupo_for)):
                     for i in range(len(caracteristicas)):
 
-                        if(self.cromossomo[i]=='1'):
-                                                        
+                        if(self.cromossomo[i]=='1'):                                       
+                            
                             if self.caracteristicas[i] in lista_grupo_for:
-                                nota_por_aluno += self.caracteristicas[i].count(self.grupo) + 0.35
-                                
-                    self.nota_avaliacao =  nota_por_aluno
-                                 
+                                nota_por_aluno  += self.caracteristicas[i].count(self.grupo) + 0.75
+                            if self.caracteristicas[i] not in lista_grupo_for:
+                                nota_por_aluno = 0.2
+
+                    self.nota_avaliacao = nota_por_aluno                        
                   
 
     def crossover(self, outro_individuo):
@@ -267,7 +268,7 @@ for i in range(len(caracteristicas_grupo)):
     
 
     print('\n')
-    solucao_final =  nom_grupo, caract_grupo,  melhores_solucoes_finais
+    solucao_final =  'Grupo: ', nom_grupo, ' - \n' , melhores_solucoes_finais
     solucao_final_tempale.append(solucao_final)
     
     melhores_solucoes_finais = []
